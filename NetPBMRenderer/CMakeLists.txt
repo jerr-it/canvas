@@ -14,9 +14,9 @@ if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIRS})
 endif ()
 
-set(SOURCES NetpbmRenderer.c SFMLNetPBMRenderer.cpp)
+set(SOURCES NetPBMRenderer.c SFMLNetPBMRenderer.cpp)
 
-set(HEADERS NetpbmRenderer.h SFMLNetPBMRenderer.h)
+set(HEADERS NetPBMRenderer.h SFMLNetPBMRenderer.h)
 
 add_library(NetPBMRenderer SHARED ${SOURCES} ${HEADERS})
 target_link_libraries(NetPBMRenderer sfml-graphics sfml-window sfml-system)

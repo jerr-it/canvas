@@ -1,14 +1,14 @@
-#include "NetpbmRenderer.h"
+#include "NetPBMRenderer.h"
 
 Rendering* createRendering(int width, int height)
 {
-    Rendering* rendering = (Rendering*) calloc(1, sizeof(Rendering));
+    Rendering* rendering = (Rendering*)calloc(1, sizeof(Rendering));
 
-    rendering->buffer = (unsigned char*) calloc(3 * width * height, sizeof(unsigned char));
-    rendering->width = width;
+    rendering->buffer = (unsigned char*)calloc(3 * width * height, sizeof(unsigned char));
+    rendering->width  = width;
     rendering->height = height;
 
-    return rendering;
+    return(rendering);
 }
 
 void setPixel(Rendering* rendering, int x, int y, unsigned char r, unsigned char g, unsigned char b)

@@ -20,7 +20,7 @@ make netPbmRender
 
 Include header:
 ```c
-#include "NetPBMRenderer/NetpbmRenderer.h"
+#include "NetPBMRenderer/NetPBMRenderer.h"
 ```
 
 Create rendering and set values:

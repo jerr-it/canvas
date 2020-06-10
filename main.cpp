@@ -1,4 +1,4 @@
-#include "NetPBMRenderer/NetpbmRenderer.h"
+#include "NetPBMRenderer/NetPBMRenderer.h"
 
 //Create video using:
 //./netPbmRender | ffmpeg -i pipe:0 -c:v libx264rgb VideoName.avi
