@@ -16,7 +16,7 @@ make netPbmRender
 ./netPbmRender
 ```
 
-<h2 align="center">Standart</h2>
+<h2 align="center">Standard</h2>
 
 Include header:
 ```c
