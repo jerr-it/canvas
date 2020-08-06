@@ -1,4 +1,4 @@
-<h1 align="center">RenderInc</h1>
+<h1 align="center">VIC</h1>
 <p align="center">
     <img src="https://img.shields.io/badge/Language-C/C++-blue?style=for-the-badge&logo=c%2B%2Bl" />
 </div>
