@@ -37,6 +37,18 @@ Artwork newArt(size_t width, size_t height);
 void setPixel(Artwork art, int x, int y, Color color);
 
 /**
+ * @brief Draws a rasterized line using the Bresenham algorithm
+ *
+ * @param art Artwork to draw on
+ * @param x0 X-Coordinate of starting point
+ * @param y0 Y-Coordinate of starting point
+ * @param x1 X-Coordinate of end point
+ * @param y1 Y-Coordinate of end point
+ * @param color Color of the line
+ */
+void drawLine(Artwork art, int x0, int y0, int x1, int y1, Color color);
+
+/**
  * @brief Draws a rectangle onto the given artwork.
  *
  * @param art The artwork to draw on

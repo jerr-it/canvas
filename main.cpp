@@ -9,15 +9,16 @@ int main() {
     for (int i = 0; i < 60 * 10; i++) {
         for (int y = 0; y < 400; y++) {
             unsigned char rng = (unsigned char)(rand() % 255);
-            for (int x = 0; x < 400; x++) {
-                setPixel(art, x, y, Color { rng, rng, rng });
-            }
+            drawLine(art, 0, y, 399, y + 50, Color { rng, rng, rng });
         }
 
         drawRect(art, 200 - 25, 200 - 25, 50, 50, Color { 255, 255, 255 });
-
-        pipeArtTo(art, stdout);
+        drawLine(art, 200 - 25, 200 - 25, 200 + 25, 200 + 25, Color { 0, 0, 0 });
     }
+
+    char fileName[] = "test.ppm";
+
+    saveArt(art, fileName);
 
     freeArt(art);
     return 0;
