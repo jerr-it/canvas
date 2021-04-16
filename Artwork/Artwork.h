@@ -37,7 +37,7 @@ Artwork newArt(size_t width, size_t height);
 void setPixel(Artwork art, int x, int y, Color color);
 
 /**
- * @brief Draws a rasterized line using the Bresenham algorithm
+ * @brief Draws a line using the Bresenham algorithm
  *
  * @param art Artwork to draw on
  * @param x0 X-Coordinate of starting point
@@ -59,6 +59,28 @@ void drawLine(Artwork art, int x0, int y0, int x1, int y1, Color color);
  * @param color Color of the rectangle
  */
 void drawRect(Artwork art, int x, int y, size_t width, size_t height, Color color);
+
+/**
+ * @brief Draws an ellipse using the Bresenham algorithm
+ *
+ * @param art Artwork to draw on
+ * @param x X-Coordinate of the ellipse center
+ * @param y Y-Coordinate of the ellipse center
+ * @param width Radius in x direction
+ * @param height Radius in y direction
+ */
+void drawEllipse(Artwork art, int x, int y, int width, int height, Color color);
+
+/**
+ * @brief Draws a circle
+ *
+ * @param art Artwork to draw on
+ * @param x X-Coordinate of circle center
+ * @param y Y-Coordinate of circle center
+ * @param radius Radius
+ * @param color Color
+ */
+void drawCircle(Artwork art, int x, int y, int radius, Color color);
 
 /**
  * @brief Save a given artwork to a file

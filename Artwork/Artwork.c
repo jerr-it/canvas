@@ -60,6 +60,56 @@ void drawRect(Artwork art, int x, int y, size_t width, size_t height, Color colo
     }
 }
 
+void drawEllipse(Artwork art, int x, int y, int width, int height, Color color) {
+    int dx = 0;
+    int dy = height;
+
+    long w2 = width * width;
+    long h2 = height * height;
+
+    long err = h2 - (2 * height - 1) * w2;
+    long err2;
+
+    do{
+        //Bottom right quadrant
+        setPixel(art, x + dx, y + dy, color);
+        drawLine(art, x, y + dy, x + dx, y + dy, color);
+
+        //Bottom left quadrant
+        setPixel(art, x - dx, y + dy, color);
+        drawLine(art, x, y + dy, x - dx, y + dy, color);
+
+        //Top left quadrant
+        setPixel(art, x - dx, y - dy, color);
+        drawLine(art, x, y - dy, x - dx, y - dy, color);
+
+        //Top right quadrant
+        setPixel(art, x + dx, y - dy, color);
+        drawLine(art, x, y - dy, x + dx, y - dy, color);
+
+        err2 = 2 * err;
+
+        if (err2 < (2 * dx + 1) * h2) {
+            dx++;
+            err += (2 * dx + 1) * h2;
+        }
+
+        if (err2 > -(2 * dy - 1) * w2) {
+            dy--;
+            err -= (2 * dy - 1) * w2;
+        }
+    } while (dy >= 0);
+
+    while (dx++ < width) {
+        setPixel(art, x + dx, y, color);
+        setPixel(art, x - dx, y, color);
+    }
+}
+
+void drawCircle(Artwork art, int x, int y, int radius, Color color) {
+    drawEllipse(art, x, y, radius, radius, color);
+}
+
 void saveArt(Artwork art, char* filename) {
     FILE* fp;
 
