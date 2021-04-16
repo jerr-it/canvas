@@ -1,10 +1,10 @@
-<h1 align="center">VIC</h1>
+<h1 align="center">Cartwork</h1>
 <p align="center">
     <img src="https://img.shields.io/badge/Language-C/C++-blue?style=for-the-badge&logo=c%2B%2Bl" />
 </div>
 <br>
 <p align="center">
-Library for rendering images and videos directly using C and the NetPBM image format, no other library involved. Includes a C++ Wrapper for usage with SFML.
+Library for rendering images and videos directly using C and the NetPBM image format
 </p>
 
 <h2 align="center">How to use</h2>
@@ -12,40 +12,54 @@ Library for rendering images and videos directly using C and the NetPBM image fo
 Compile repo:
 ```
 cmake .
-make netPbmRender
-./netPbmRender
+make Cartwork
+./Cartwork
+
+or 
+g++ -o Cartwork main.cpp Artwork/Color.h Artwork/Artwork.h Artwork/Artwork.c
+./Cartwork
 ```
 
-<h2 align="center">Standard</h2>
+<h2 align="center">Examples</h2>
+<h6 align="center">Check main.cpp!</h6>
 
 Include header:
 ```c
-#include "NetPBMRenderer/NetPBMRenderer.h"
+#include "Artwork/Artwork.h"
 ```
 
-Create rendering and set values:
+Create artwork and set values:
 ```c
-Rendering* rendering = createRendering(400, 400);
-
-for (int y = 0; y < 400; y++)
-{
-    for (int x = 0; x < 400; x++)
-    {
-        //Grayscale image
-        int rng = rand() % 255;
-        setPixel(rendering, x, y, rng, rng, rng);
-    }
-}
+Artwork art = newArt(400, 400);
+```
+Dont forget to free afterwards to avoid memory leaks!
+```c
+freeArt(art);
 ```
 
-Save image to a file (.ppm):
+Set individual pixel
 ```c
-saveRendering(rendering, "image.ppm");
+setPixel(art, <x>, <y>, Color {255, 255, 255});
 ```
 
-Write image to standard output to create a video:
+Draw line:
 ```c
-writeRendering(rendering);
+drawLine(art, <x0>, <y0>, <x1>, <y1>, Color {0, 255, 0});
+```
+
+Draw rect:
+```c
+drawRect(art, <top-left x>, <top-left y>, <width>, <height>, Color { 255, 0, 255 });
+```
+
+Draw circle:
+```c
+drawCircle(art, <x>, <y>, <radius>, Color { 255, 255, 255 });
+```
+
+Draw ellipse:
+```c
+drawEllipse(art, <x>, <y>, <x-radius>, <y-radius>, Color { 0, 0, 0 });
 ```
 
 Pipe it to VLC:
@@ -60,10 +74,10 @@ Or render the complete video:
 
 <h2 align="center">SFML Tandem</h2>
 
-The SFMLNetPBMRenderer class is essentially a C++ wrapper for the standard rendering. It enables you to create Renderings from sf::Image objects, the entire window for example.
+The SFML_Artwork class is essentially a C++ wrapper for the standard rendering. It enables you to create Artworks from sf::Image objects, the entire window for example.
 
 ```c
-#include "NetPBMRenderer/SFMLNetPBMRenderer.h"
+#include "SFML_Artwork/SFML_Artwork.h"
 ```
 Create your window and rendering:
 ```c
@@ -74,18 +88,12 @@ Texture texture;
 Image image;
 Vector2u windowsize;
 ```
-Write your window to standard output for video creation:
+Save your window as an image:
 ```c
 windowsize = window.getSize();
 texture.create(windowsize.x, windowsize.y);
 texture.update(window);
 image = texture.copyToImage();
-SFMLNetPBMRenderer::copyFromImage(rendering, image);
-writeRendering(rendering);
-```
-
-<h2 align="center">Dont forget to free</h2>
-
-```c
-freeRendering(rendering);
+Artwork art = SFML_Artwork::fromImage(image);
+saveArt(art);
 ```

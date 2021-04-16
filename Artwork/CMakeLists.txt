@@ -18,5 +18,5 @@ set(SOURCES Artwork.c SFML_Artwork.cpp)
 
 set(HEADERS Color.h Artwork.h SFML_Artwork.h)
 
-add_library(NetPBMRenderer SHARED ${SOURCES} ${HEADERS})
-target_link_libraries(NetPBMRenderer sfml-graphics sfml-window sfml-system)
+add_library(Artwork SHARED ${SOURCES} ${HEADERS})
+target_link_libraries(Artwork sfml-graphics sfml-window sfml-system)
