@@ -62,6 +62,17 @@ Draw ellipse:
 drawEllipse(art, <x>, <y>, <x-radius>, <y-radius>, Color { 0, 0, 0 });
 ```
 
+Save as a single image:
+```c
+char filename[] = "nicePic.ppm";
+saveArt(art, filename);
+```
+
+Pipe it out (necessary for video creation):
+```c
+pipeArtTo(art, stdout);
+```
+
 Pipe it to VLC:
 ```
 ./ExecutableNameHere | ppmtoy4m -F60:1 | vlc -
