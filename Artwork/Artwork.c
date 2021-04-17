@@ -7,6 +7,7 @@ Artwork newArt(size_t width, size_t height) {
         (Artwork) {
             width,
             height,
+            1,
             (Color) { 255, 255, 255 },
             (Color) { 255, 255, 255 },
             buffer,
@@ -115,7 +116,7 @@ void drawEllipseColor(Artwork art, int x, int y, int width, int height, Color co
 
 void drawEllipse(Artwork art, int x, int y, int width, int height) {
     drawEllipseColor(art, x, y, width, height, art.strokeColor);
-    drawEllipseColor(art, x, y, width - 1, height - 1, art.fillColor);
+    drawEllipseColor(art, x, y, width - art.strokeWidth, height - art.strokeWidth, art.fillColor);
 }
 
 void drawCircle(Artwork art, int x, int y, int radius) {

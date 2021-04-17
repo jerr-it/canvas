@@ -11,13 +11,12 @@ Library for rendering images and videos directly using C and the NetPBM image fo
 
 Compile repo:
 ```
-cmake .
-make Cartwork
-./Cartwork
+make 
+./render
 
 or 
-g++ -o Cartwork main.cpp Artwork/Color.h Artwork/Artwork.h Artwork/Artwork.c
-./Cartwork
+g++ -o render main.cpp Artwork/Color.h Artwork/Artwork.h Artwork/Artwork.c
+./render
 ```
 
 <h2 align="center">Examples</h2>

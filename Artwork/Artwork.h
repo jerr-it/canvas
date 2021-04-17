@@ -15,6 +15,7 @@ typedef struct {
     size_t         width;
     size_t         height;
 
+    size_t         strokeWidth;
     Color          strokeColor;
     Color          fillColor;
 

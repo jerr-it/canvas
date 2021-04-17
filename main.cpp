@@ -16,6 +16,7 @@ int main() {
 
     art.strokeColor = Color { 255, 0, 0 };
     art.fillColor   = Color { 255, 255, 255 };
+    art.strokeWidth = 10;
     drawRect(art, 200 - 25, 200 - 25, 50, 50);
 
     art.fillColor = Color { 0, 0, 0 };
@@ -23,6 +24,7 @@ int main() {
 
     art.strokeColor = Color { 255, 255, 255 };
     art.fillColor   = Color { 255, 0, 0 };
+    art.strokeWidth = 5;
     drawCircle(art, 400 - 75, 200, 50);
 
     char fileName[] = "test.ppm";
