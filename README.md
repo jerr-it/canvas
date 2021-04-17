@@ -36,12 +36,20 @@ Dont forget to free afterwards to avoid memory leaks!
 freeArt(art);
 ```
 
+Set color scheme with stroke, fill and stroke width:
+```c
+art.strokeColor = Color { 255, 0, 0 };
+art.strokeWidth = 5;
+
+art.fillColor = Color { 200, 200, 200 };
+```
+
 Set individual pixel
 ```c
 setPixel(art, <x>, <y>, Color {255, 255, 255});
 ```
 
-Draw line:
+Draw line (color determined by stroke color):
 ```c
 drawLine(art, <x0>, <y0>, <x1>, <y1>, Color {0, 255, 0});
 ```
