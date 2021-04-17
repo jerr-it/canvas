@@ -51,22 +51,22 @@ setPixel(art, <x>, <y>, Color {255, 255, 255});
 
 Draw line (color determined by stroke color):
 ```c
-drawLine(art, <x0>, <y0>, <x1>, <y1>, Color {0, 255, 0});
+drawLine(art, <x0>, <y0>, <x1>, <y1>);
 ```
 
 Draw rect:
 ```c
-drawRect(art, <top-left x>, <top-left y>, <width>, <height>, Color { 255, 0, 255 });
+drawRect(art, <top-left x>, <top-left y>, <width>, <height>);
 ```
 
 Draw circle:
 ```c
-drawCircle(art, <x>, <y>, <radius>, Color { 255, 255, 255 });
+drawCircle(art, <x>, <y>, <radius>);
 ```
 
 Draw ellipse:
 ```c
-drawEllipse(art, <x>, <y>, <x-radius>, <y-radius>, Color { 0, 0, 0 });
+drawEllipse(art, <x>, <y>, <x-radius>, <y-radius>);
 ```
 
 Save as a single image:
