@@ -61,13 +61,39 @@ void drawLine(Artwork art, int x0, int y0, int x1, int y1) {
 }
 
 void drawRect(Artwork art, int x, int y, size_t width, size_t height) {
-    drawLineColor(art, x, y, x + width - 1, y, art.strokeColor);
-    drawLineColor(art, x, y + height - 1, x + width - 1, y + height - 1, art.strokeColor);
-    drawLineColor(art, x, y, x, y + height - 1, art.strokeColor);
-    drawLineColor(art, x + width - 1, y, x + width - 1, y + height - 1, art.strokeColor);
+    //Top stroke section
+    int xoffset = 0;
 
-    for (int ypos = y + 1; ypos < y + height - 1; ypos++) {
-        for (int xpos = x + 1; xpos < x + width - 1; xpos++) {
+    for (int ypos = y; ypos < y + art.strokeWidth; ypos++) {
+        drawLineColor(art, x + xoffset, ypos, x + (width - xoffset - 1), ypos, art.strokeColor);
+        xoffset++;
+    }
+
+    //Bottom stroke section
+    xoffset = 0;
+    for (int ypos = y + height - 1; ypos >= y + height - art.strokeWidth; ypos--) {
+        drawLineColor(art, x + xoffset, ypos, x + (width - xoffset - 1), ypos, art.strokeColor);
+        xoffset++;
+    }
+
+    //Left stoke seciton
+    int yoffset = 0;
+
+    for (int xpos = x; xpos < x + art.strokeWidth; xpos++) {
+        drawLineColor(art, xpos, y + yoffset, xpos, y + (width - yoffset - 1), art.strokeColor);
+        yoffset++;
+    }
+
+    //Right stroke section
+    yoffset = 0;
+    for (int xpos = x + width - 1; xpos >= x + height - art.strokeWidth; xpos--) {
+        drawLineColor(art, xpos, y + yoffset, xpos, y + (height - yoffset - 1), art.strokeColor);
+        yoffset++;
+    }
+
+    //Filling
+    for (int ypos = y + art.strokeWidth; ypos < y + height - art.strokeWidth; ypos++) {
+        for (int xpos = x + art.strokeWidth; xpos < x + width - art.strokeWidth; xpos++) {
             setPixel(art, xpos, ypos, art.fillColor);
         }
     }
