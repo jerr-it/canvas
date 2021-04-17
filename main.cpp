@@ -6,12 +6,10 @@
 int main() {
     Artwork art = newArt(400, 400);
 
-    for (int i = 0; i < 60 * 10; i++) {
-        for (int y = 0; y < 400; y++) {
-            unsigned char v = (unsigned char)((float)y * (255.0 / 400.0));
-            art.strokeColor = Color { v, v, v };
-            drawLine(art, 0, y, 399, y + 200);
-        }
+    for (int y = 0; y < 400; y++) {
+        unsigned char v = (unsigned char)((float)y * (255.0 / 400.0));
+        art.strokeColor = Color { v, v, v };
+        drawLine(art, 0, y, 399, y + 200);
     }
 
     art.strokeColor = Color { 255, 0, 0 };

@@ -32,6 +32,14 @@ typedef struct {
 Artwork newArt(size_t width, size_t height);
 
 /**
+ * @brief Clears the artwork, aka filling it entirely with the given color.
+ *
+ * @param art artwork to clear
+ * @param color color
+ */
+void clear(Artwork art, Color color);
+
+/**
  * @brief Set an individual pixel of an artwork
  *
  * @param art Artwork to draw on

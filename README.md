@@ -69,6 +69,11 @@ Draw ellipse:
 drawEllipse(art, <x>, <y>, <x-radius>, <y-radius>);
 ```
 
+Clear artwork / fill it entirely_
+```c
+clear(art, Color { 0, 0, 0 });
+```
+
 Save as a single image:
 ```c
 char filename[] = "nicePic.ppm";

@@ -14,6 +14,14 @@ Artwork newArt(size_t width, size_t height) {
         };
 }
 
+void clear(Artwork art, Color color) {
+    for (int y = 0; y < art.height; y++) {
+        for (int x = 0; x < art.width; x++) {
+            setPixel(art, x, y, color);
+        }
+    }
+}
+
 void setPixel(Artwork art, int x, int y, Color color) {
     if (x < 0 || x >= art.width || y < 0 || y >= art.height) {
         return;
