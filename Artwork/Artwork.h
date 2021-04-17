@@ -14,6 +14,10 @@ extern "C" {
 typedef struct {
     size_t         width;
     size_t         height;
+
+    Color          strokeColor;
+    Color          fillColor;
+
     unsigned char* buffer;
 } Artwork;
 
@@ -46,7 +50,7 @@ void setPixel(Artwork art, int x, int y, Color color);
  * @param y1 Y-Coordinate of end point
  * @param color Color of the line
  */
-void drawLine(Artwork art, int x0, int y0, int x1, int y1, Color color);
+void drawLine(Artwork art, int x0, int y0, int x1, int y1);
 
 /**
  * @brief Draws a rectangle onto the given artwork.
@@ -58,7 +62,7 @@ void drawLine(Artwork art, int x0, int y0, int x1, int y1, Color color);
  * @param height Height of the rectangle
  * @param color Color of the rectangle
  */
-void drawRect(Artwork art, int x, int y, size_t width, size_t height, Color color);
+void drawRect(Artwork art, int x, int y, size_t width, size_t height);
 
 /**
  * @brief Draws an ellipse using the Bresenham algorithm
@@ -69,7 +73,7 @@ void drawRect(Artwork art, int x, int y, size_t width, size_t height, Color colo
  * @param width Radius in x direction
  * @param height Radius in y direction
  */
-void drawEllipse(Artwork art, int x, int y, int width, int height, Color color);
+void drawEllipse(Artwork art, int x, int y, int width, int height);
 
 /**
  * @brief Draws a circle
@@ -80,7 +84,7 @@ void drawEllipse(Artwork art, int x, int y, int width, int height, Color color);
  * @param radius Radius
  * @param color Color
  */
-void drawCircle(Artwork art, int x, int y, int radius, Color color);
+void drawCircle(Artwork art, int x, int y, int radius);
 
 /**
  * @brief Save a given artwork to a file

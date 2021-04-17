@@ -7,6 +7,8 @@ Artwork newArt(size_t width, size_t height) {
         (Artwork) {
             width,
             height,
+            (Color) { 255, 255, 255 },
+            (Color) { 255, 255, 255 },
             buffer,
         };
 }
@@ -21,7 +23,8 @@ void setPixel(Artwork art, int x, int y, Color color) {
     art.buffer[(x + y * art.width) * 3 + 2] = color.b;
 }
 
-void drawLine(Artwork art, int x0, int y0, int x1, int y1, Color color) {
+//Helper for filling shapes like circles and rectangles
+void drawLineColor(Artwork art, int x0, int y0, int x1, int y1, Color color) {
     int dx = abs(x1 - x0);
     int sx = x0 < x1 ? 1 : -1;
 
@@ -52,15 +55,25 @@ void drawLine(Artwork art, int x0, int y0, int x1, int y1, Color color) {
     }
 }
 
-void drawRect(Artwork art, int x, int y, size_t width, size_t height, Color color) {
-    for (int ypos = y; ypos < y + height; ypos++) {
-        for (int xpos = x; xpos < x + width; xpos++) {
-            setPixel(art, xpos, ypos, color);
+void drawLine(Artwork art, int x0, int y0, int x1, int y1) {
+    drawLineColor(art, x0, y0, x1, y1, art.strokeColor);
+}
+
+void drawRect(Artwork art, int x, int y, size_t width, size_t height) {
+    drawLineColor(art, x, y, x + width - 1, y, art.strokeColor);
+    drawLineColor(art, x, y + height - 1, x + width - 1, y + height - 1, art.strokeColor);
+    drawLineColor(art, x, y, x, y + height - 1, art.strokeColor);
+    drawLineColor(art, x + width - 1, y, x + width - 1, y + height - 1, art.strokeColor);
+
+    for (int ypos = y + 1; ypos < y + height - 1; ypos++) {
+        for (int xpos = x + 1; xpos < x + width - 1; xpos++) {
+            setPixel(art, xpos, ypos, art.fillColor);
         }
     }
 }
 
-void drawEllipse(Artwork art, int x, int y, int width, int height, Color color) {
+//Helper for drawing ellipse with stroke
+void drawEllipseColor(Artwork art, int x, int y, int width, int height, Color color) {
     int dx = 0;
     int dy = height;
 
@@ -71,21 +84,15 @@ void drawEllipse(Artwork art, int x, int y, int width, int height, Color color) 
     long err2;
 
     do{
-        //Bottom right quadrant
+        drawLineColor(art, x, y + dy, x + dx, y + dy, color);
+        drawLineColor(art, x, y + dy, x - dx, y + dy, color);
+        drawLineColor(art, x, y - dy, x - dx, y - dy, color);
+        drawLineColor(art, x, y - dy, x + dx, y - dy, color);
+
         setPixel(art, x + dx, y + dy, color);
-        drawLine(art, x, y + dy, x + dx, y + dy, color);
-
-        //Bottom left quadrant
         setPixel(art, x - dx, y + dy, color);
-        drawLine(art, x, y + dy, x - dx, y + dy, color);
-
-        //Top left quadrant
         setPixel(art, x - dx, y - dy, color);
-        drawLine(art, x, y - dy, x - dx, y - dy, color);
-
-        //Top right quadrant
         setPixel(art, x + dx, y - dy, color);
-        drawLine(art, x, y - dy, x + dx, y - dy, color);
 
         err2 = 2 * err;
 
@@ -106,8 +113,13 @@ void drawEllipse(Artwork art, int x, int y, int width, int height, Color color) 
     }
 }
 
-void drawCircle(Artwork art, int x, int y, int radius, Color color) {
-    drawEllipse(art, x, y, radius, radius, color);
+void drawEllipse(Artwork art, int x, int y, int width, int height) {
+    drawEllipseColor(art, x, y, width, height, art.strokeColor);
+    drawEllipseColor(art, x, y, width - 1, height - 1, art.fillColor);
+}
+
+void drawCircle(Artwork art, int x, int y, int radius) {
+    drawEllipse(art, x, y, radius, radius);
 }
 
 void saveArt(Artwork art, char* filename) {
