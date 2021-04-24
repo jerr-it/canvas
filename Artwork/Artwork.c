@@ -15,15 +15,15 @@ Artwork newArt(size_t width, size_t height) {
 }
 
 void clear(Artwork art, Color color) {
-    for (int y = 0; y < art.height; y++) {
-        for (int x = 0; x < art.width; x++) {
+    for (size_t y = 0; y < art.height; y++) {
+        for (size_t x = 0; x < art.width; x++) {
             setPixel(art, x, y, color);
         }
     }
 }
 
-void setPixel(Artwork art, int x, int y, Color color) {
-    if (x < 0 || x >= art.width || y < 0 || y >= art.height) {
+void setPixel(Artwork art, size_t x, size_t y, Color color) {
+    if (x >= art.width || y >= art.height) {
         return;
     }
 
@@ -72,14 +72,14 @@ void drawRect(Artwork art, int x, int y, size_t width, size_t height) {
     //Top stroke section
     int xoffset = 0;
 
-    for (int ypos = y; ypos < y + art.strokeWidth; ypos++) {
+    for (size_t ypos = y; ypos < y + art.strokeWidth; ypos++) {
         drawLineColor(art, x + xoffset, ypos, x + (width - xoffset - 1), ypos, art.strokeColor);
         xoffset++;
     }
 
     //Bottom stroke section
     xoffset = 0;
-    for (int ypos = y + height - 1; ypos >= y + height - art.strokeWidth; ypos--) {
+    for (size_t ypos = y + height - 1; ypos >= y + height - art.strokeWidth; ypos--) {
         drawLineColor(art, x + xoffset, ypos, x + (width - xoffset - 1), ypos, art.strokeColor);
         xoffset++;
     }
@@ -87,21 +87,21 @@ void drawRect(Artwork art, int x, int y, size_t width, size_t height) {
     //Left stoke seciton
     int yoffset = 0;
 
-    for (int xpos = x; xpos < x + art.strokeWidth; xpos++) {
+    for (size_t xpos = x; xpos < x + art.strokeWidth; xpos++) {
         drawLineColor(art, xpos, y + yoffset, xpos, y + (width - yoffset - 1), art.strokeColor);
         yoffset++;
     }
 
     //Right stroke section
     yoffset = 0;
-    for (int xpos = x + width - 1; xpos >= x + height - art.strokeWidth; xpos--) {
+    for (size_t xpos = x + width - 1; xpos >= x + height - art.strokeWidth; xpos--) {
         drawLineColor(art, xpos, y + yoffset, xpos, y + (height - yoffset - 1), art.strokeColor);
         yoffset++;
     }
 
     //Filling
-    for (int ypos = y + art.strokeWidth; ypos < y + height - art.strokeWidth; ypos++) {
-        for (int xpos = x + art.strokeWidth; xpos < x + width - art.strokeWidth; xpos++) {
+    for (size_t ypos = y + art.strokeWidth; ypos < y + height - art.strokeWidth; ypos++) {
+        for (size_t xpos = x + art.strokeWidth; xpos < x + width - art.strokeWidth; xpos++) {
             setPixel(art, xpos, ypos, art.fillColor);
         }
     }
@@ -167,14 +167,14 @@ void saveArt(Artwork art, char* filename) {
         return;
     }
 
-    fprintf(fp, "P6\n%d %d\n255\n", art.width, art.height);
+    fprintf(fp, "P6\n%ld %ld\n255\n", art.width, art.height);
     fwrite(art.buffer, 3 * art.width * art.height, 1, fp);
 
     fclose(fp);
 }
 
 void pipeArtTo(Artwork art, FILE* target) {
-    printf("P6\n%d %d\n255\n", art.width, art.height);
+    printf("P6\n%ld %ld\n255\n", art.width, art.height);
     fwrite(art.buffer, 3 * art.width * art.height, 1, target);
 }
 

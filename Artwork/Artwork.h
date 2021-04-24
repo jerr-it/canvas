@@ -47,7 +47,7 @@ void clear(Artwork art, Color color);
  * @param y Y-Position of the target pixel
  * @param color Color the pixel should become
  */
-void setPixel(Artwork art, int x, int y, Color color);
+void setPixel(Artwork art, size_t x, size_t y, Color color);
 
 /**
  * @brief Draws a line using the Bresenham algorithm

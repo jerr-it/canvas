@@ -1,14 +1,19 @@
-COMPILER = g++
-FLAGS = -g
+CPP_COMPILER = g++
+CPP_STD = c++17
+
+C_COMPILER = gcc
+C_STD = c17
+
+FLAGS = -g -pedantic -Wall -Werror -Wextra -Wfloat-equal -Wshadow
 
 render: main.o artwork.o
-	${COMPILER} -o $@ $^
+	${CPP_COMPILER} -o $@ $^
 
 artwork.o: Artwork/Artwork.c Artwork/Artwork.h Artwork/Color.h
-	${COMPILER} ${FLAGS} -c -o $@ $<
+	${C_COMPILER} -std=${C_STD} ${FLAGS} -c -o $@ $<
 
 main.o: main.cpp Artwork/Artwork.h
-	${COMPILER} ${FLAGS} -c -o $@ $<
+	${CPP_COMPILER} -std=${CPP_STD} ${FLAGS} -c -o $@ $<
 
 clean: 
 	rm -f render artwork.o main.o
