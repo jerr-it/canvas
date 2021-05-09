@@ -8,12 +8,12 @@ class SFML_Artwork
 {
 public:
 
-    /**
-     * Create a rendering from an sf::Image
-     * @param image sf::Image
-     * @return new Rendering
-     */
-    static Artwork fromImage(sf::Image image);
+	/**
+	 * Create a rendering from an sf::Image
+	 * @param image sf::Image
+	 * @return new Rendering
+	 */
+	static Artwork fromImage(sf::Image image);
 };
 
 

@@ -1,183 +1,189 @@
 #include "Artwork.h"
 
-Artwork newArt(size_t width, size_t height) {
-    unsigned char* buffer = (unsigned char*)calloc(3 * width * height, sizeof(unsigned char));
+Artwork newArt(size_t width, size_t height)
+{
+	unsigned char *buffer = (unsigned char *)calloc(3 * width * height, sizeof(unsigned char));
 
-    return
-        (Artwork) {
-            width,
-            height,
-            1,
-            (Color) { 255, 255, 255 },
-            (Color) { 255, 255, 255 },
-            buffer,
-        };
+	return
+		(Artwork) {
+			width,
+			height,
+			1,
+			(Color) { 255, 255, 255 },
+			(Color) { 255, 255, 255 },
+			buffer,
+		};
 }
 
-void clear(Artwork art, Color color) {
-    for (size_t y = 0; y < art.height; y++) {
-        for (size_t x = 0; x < art.width; x++) {
-            setPixel(art, x, y, color);
-        }
-    }
+void clear(Artwork art, Color color)
+{
+	for (size_t y = 0; y < art.height; y++)
+		for (size_t x = 0; x < art.width; x++)
+			setPixel(art, x, y, color);
 }
 
-void setPixel(Artwork art, size_t x, size_t y, Color color) {
-    if (x >= art.width || y >= art.height) {
-        return;
-    }
+void setPixel(Artwork art, size_t x, size_t y, Color color)
+{
+	if (x >= art.width || y >= art.height)
+		return;
 
-    art.buffer[(x + y * art.width) * 3 + 0] = color.r;
-    art.buffer[(x + y * art.width) * 3 + 1] = color.g;
-    art.buffer[(x + y * art.width) * 3 + 2] = color.b;
+	art.buffer[(x + y * art.width) * 3 + 0] = color.r;
+	art.buffer[(x + y * art.width) * 3 + 1] = color.g;
+	art.buffer[(x + y * art.width) * 3 + 2] = color.b;
 }
 
 //Helper for filling shapes like circles and rectangles
-void drawLineColor(Artwork art, int x0, int y0, int x1, int y1, Color color) {
-    int dx = abs(x1 - x0);
-    int sx = x0 < x1 ? 1 : -1;
+void drawLineColor(Artwork art, int x0, int y0, int x1, int y1, Color color)
+{
+	int dx = abs(x1 - x0);
+	int sx = x0 < x1 ? 1 : -1;
 
-    int dy = -abs(y1 - y0);
-    int sy = y0 < y1 ? 1 : -1;
+	int dy = -abs(y1 - y0);
+	int sy = y0 < y1 ? 1 : -1;
 
-    int err = dx + dy;
-    int err2;
+	int err = dx + dy;
+	int err2;
 
-    while (1) {
-        setPixel(art, x0, y0, color);
+	while (1) {
+		setPixel(art, x0, y0, color);
 
-        if (x0 == x1 && y0 == y1) {
-            break;
-        }
+		if (x0 == x1 && y0 == y1)
+			break;
 
-        err2 = 2 * err;
+		err2 = 2 * err;
 
-        if (err2 > dy) {
-            err += dy;
-            x0  += sx;
-        }
+		if (err2 > dy) {
+			err += dy;
+			x0 += sx;
+		}
 
-        if (err2 < dx) {
-            err += dx;
-            y0  += sy;
-        }
-    }
+		if (err2 < dx) {
+			err += dx;
+			y0 += sy;
+		}
+	}
 }
 
-void drawLine(Artwork art, int x0, int y0, int x1, int y1) {
-    drawLineColor(art, x0, y0, x1, y1, art.strokeColor);
+void drawLine(Artwork art, int x0, int y0, int x1, int y1)
+{
+	drawLineColor(art, x0, y0, x1, y1, art.strokeColor);
 }
 
-void drawRect(Artwork art, int x, int y, size_t width, size_t height) {
-    //Top stroke section
-    int xoffset = 0;
+void drawRect(Artwork art, int x, int y, size_t width, size_t height)
+{
+	//Top stroke section
+	int xoffset = 0;
 
-    for (size_t ypos = y; ypos < y + art.strokeWidth; ypos++) {
-        drawLineColor(art, x + xoffset, ypos, x + (width - xoffset - 1), ypos, art.strokeColor);
-        xoffset++;
-    }
+	for (size_t ypos = y; ypos < y + art.strokeWidth; ypos++) {
+		drawLineColor(art, x + xoffset, ypos, x + (width - xoffset - 1), ypos, art.strokeColor);
+		xoffset++;
+	}
 
-    //Bottom stroke section
-    xoffset = 0;
-    for (size_t ypos = y + height - 1; ypos >= y + height - art.strokeWidth; ypos--) {
-        drawLineColor(art, x + xoffset, ypos, x + (width - xoffset - 1), ypos, art.strokeColor);
-        xoffset++;
-    }
+	//Bottom stroke section
+	xoffset = 0;
+	for (size_t ypos = y + height - 1; ypos >= y + height - art.strokeWidth; ypos--) {
+		drawLineColor(art, x + xoffset, ypos, x + (width - xoffset - 1), ypos, art.strokeColor);
+		xoffset++;
+	}
 
-    //Left stoke seciton
-    int yoffset = 0;
+	//Left stoke seciton
+	int yoffset = 0;
 
-    for (size_t xpos = x; xpos < x + art.strokeWidth; xpos++) {
-        drawLineColor(art, xpos, y + yoffset, xpos, y + (width - yoffset - 1), art.strokeColor);
-        yoffset++;
-    }
+	for (size_t xpos = x; xpos < x + art.strokeWidth; xpos++) {
+		drawLineColor(art, xpos, y + yoffset, xpos, y + (width - yoffset - 1), art.strokeColor);
+		yoffset++;
+	}
 
-    //Right stroke section
-    yoffset = 0;
-    for (size_t xpos = x + width - 1; xpos >= x + height - art.strokeWidth; xpos--) {
-        drawLineColor(art, xpos, y + yoffset, xpos, y + (height - yoffset - 1), art.strokeColor);
-        yoffset++;
-    }
+	//Right stroke section
+	yoffset = 0;
+	for (size_t xpos = x + width - 1; xpos >= x + height - art.strokeWidth; xpos--) {
+		drawLineColor(art, xpos, y + yoffset, xpos, y + (height - yoffset - 1), art.strokeColor);
+		yoffset++;
+	}
 
-    //Filling
-    for (size_t ypos = y + art.strokeWidth; ypos < y + height - art.strokeWidth; ypos++) {
-        for (size_t xpos = x + art.strokeWidth; xpos < x + width - art.strokeWidth; xpos++) {
-            setPixel(art, xpos, ypos, art.fillColor);
-        }
-    }
+	//Filling
+	for (size_t ypos = y + art.strokeWidth; ypos < y + height - art.strokeWidth; ypos++)
+		for (size_t xpos = x + art.strokeWidth; xpos < x + width - art.strokeWidth; xpos++)
+			setPixel(art, xpos, ypos, art.fillColor);
 }
 
 //Helper for drawing ellipse with stroke
-void drawEllipseColor(Artwork art, int x, int y, int width, int height, Color color) {
-    int dx = 0;
-    int dy = height;
+void drawEllipseColor(Artwork art, int x, int y, int width, int height, Color color)
+{
+	int dx = 0;
+	int dy = height;
 
-    long w2 = width * width;
-    long h2 = height * height;
+	long w2 = width * width;
+	long h2 = height * height;
 
-    long err = h2 - (2 * height - 1) * w2;
-    long err2;
+	long err = h2 - (2 * height - 1) * w2;
+	long err2;
 
-    do{
-        drawLineColor(art, x, y + dy, x + dx, y + dy, color);
-        drawLineColor(art, x, y + dy, x - dx, y + dy, color);
-        drawLineColor(art, x, y - dy, x - dx, y - dy, color);
-        drawLineColor(art, x, y - dy, x + dx, y - dy, color);
+	do{
+		drawLineColor(art, x, y + dy, x + dx, y + dy, color);
+		drawLineColor(art, x, y + dy, x - dx, y + dy, color);
+		drawLineColor(art, x, y - dy, x - dx, y - dy, color);
+		drawLineColor(art, x, y - dy, x + dx, y - dy, color);
 
-        setPixel(art, x + dx, y + dy, color);
-        setPixel(art, x - dx, y + dy, color);
-        setPixel(art, x - dx, y - dy, color);
-        setPixel(art, x + dx, y - dy, color);
+		setPixel(art, x + dx, y + dy, color);
+		setPixel(art, x - dx, y + dy, color);
+		setPixel(art, x - dx, y - dy, color);
+		setPixel(art, x + dx, y - dy, color);
 
-        err2 = 2 * err;
+		err2 = 2 * err;
 
-        if (err2 < (2 * dx + 1) * h2) {
-            dx++;
-            err += (2 * dx + 1) * h2;
-        }
+		if (err2 < (2 * dx + 1) * h2) {
+			dx++;
+			err += (2 * dx + 1) * h2;
+		}
 
-        if (err2 > -(2 * dy - 1) * w2) {
-            dy--;
-            err -= (2 * dy - 1) * w2;
-        }
-    } while (dy >= 0);
+		if (err2 > -(2 * dy - 1) * w2) {
+			dy--;
+			err -= (2 * dy - 1) * w2;
+		}
+	} while (dy >= 0);
 
-    while (dx++ < width) {
-        setPixel(art, x + dx, y, color);
-        setPixel(art, x - dx, y, color);
-    }
+	while (dx++ < width) {
+		setPixel(art, x + dx, y, color);
+		setPixel(art, x - dx, y, color);
+	}
 }
 
-void drawEllipse(Artwork art, int x, int y, int width, int height) {
-    drawEllipseColor(art, x, y, width, height, art.strokeColor);
-    drawEllipseColor(art, x, y, width - art.strokeWidth, height - art.strokeWidth, art.fillColor);
+void drawEllipse(Artwork art, int x, int y, int width, int height)
+{
+	drawEllipseColor(art, x, y, width, height, art.strokeColor);
+	drawEllipseColor(art, x, y, width - art.strokeWidth, height - art.strokeWidth, art.fillColor);
 }
 
-void drawCircle(Artwork art, int x, int y, int radius) {
-    drawEllipse(art, x, y, radius, radius);
+void drawCircle(Artwork art, int x, int y, int radius)
+{
+	drawEllipse(art, x, y, radius, radius);
 }
 
-void saveArt(Artwork art, char* filename) {
-    FILE* fp;
+void saveArt(Artwork art, char *filename)
+{
+	FILE *fp;
 
-    fp = fopen(filename, "w");
+	fp = fopen(filename, "w");
 
-    if (fp == NULL) {
-        printf("Can't open file!");
-        return;
-    }
+	if (fp == NULL) {
+		printf("Can't open file!");
+		return;
+	}
 
-    fprintf(fp, "P6\n%ld %ld\n255\n", art.width, art.height);
-    fwrite(art.buffer, 3 * art.width * art.height, 1, fp);
+	fprintf(fp, "P6\n%ld %ld\n255\n", art.width, art.height);
+	fwrite(art.buffer, 3 * art.width * art.height, 1, fp);
 
-    fclose(fp);
+	fclose(fp);
 }
 
-void pipeArtTo(Artwork art, FILE* target) {
-    printf("P6\n%ld %ld\n255\n", art.width, art.height);
-    fwrite(art.buffer, 3 * art.width * art.height, 1, target);
+void pipeArtTo(Artwork art, FILE *target)
+{
+	printf("P6\n%ld %ld\n255\n", art.width, art.height);
+	fwrite(art.buffer, 3 * art.width * art.height, 1, target);
 }
 
-void freeArt(Artwork art) {
-    free(art.buffer);
+void freeArt(Artwork art)
+{
+	free(art.buffer);
 }

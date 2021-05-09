@@ -12,14 +12,14 @@ extern "C" {
 #include "Color.h"
 
 typedef struct {
-    size_t         width;
-    size_t         height;
+	size_t		width;
+	size_t		height;
 
-    size_t         strokeWidth;
-    Color          strokeColor;
-    Color          fillColor;
+	size_t		strokeWidth;
+	Color		strokeColor;
+	Color		fillColor;
 
-    unsigned char* buffer;
+	unsigned char * buffer;
 } Artwork;
 
 /**
@@ -101,7 +101,7 @@ void drawCircle(Artwork art, int x, int y, int radius);
  * @param art The artwork to save
  * @param filename Target file name (should end with .ppm)
  */
-void saveArt(Artwork art, char* filename);
+void saveArt(Artwork art, char *filename);
 
 /**
  * @brief Pipe the artwork to a given target
@@ -109,7 +109,7 @@ void saveArt(Artwork art, char* filename);
  * @param art Artwork to pipe out
  * @param target The pipe target, e.g. stdout, stderr ...
  */
-void pipeArtTo(Artwork art, FILE* target);
+void pipeArtTo(Artwork art, FILE *target);
 
 /**
  * @brief Free the artworks used memory
